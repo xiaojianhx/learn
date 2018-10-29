@@ -7,7 +7,7 @@ jieba.load_userdict("userdict.txt")
 jieba.add_word('一妻一妾一人生', None, 'nl')
 # jieba.enable_parallel(4)
 
-s = '一天一地一世界，一妻一妾一人生'
+s = '一天一地一世界，一妻一妾一人生，虽然，但是'
 seg_list = jieba.cut(s, HMM = False)
 print("HMM Mode: " + "/ ".join(seg_list))  # 全模式
 
@@ -48,3 +48,10 @@ print ('############################################### %s #####################
 result = jieba.tokenize(s, mode = 'search')
 for item in result:
     print (item)
+
+print (jieba.lcut(s))
+
+print ('############################################### %s ###############################################' % '高频词汇')
+jieba.analyse.set_stop_words('stop_words.txt')
+words = jieba.cut(s, cut_all = True)
+print (','.join(words))
