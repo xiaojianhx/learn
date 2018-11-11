@@ -2,56 +2,27 @@
 # encoding: utf-8
 
 import jieba
-
-jieba.load_userdict("userdict.txt")
-jieba.add_word('一妻一妾一人生', None, 'nl')
-# jieba.enable_parallel(4)
-
-s = '一天一地一世界，一妻一妾一人生，虽然，但是'
-seg_list = jieba.cut(s, HMM = False)
-print("HMM Mode: " + "/ ".join(seg_list))  # 全模式
-
-seg_list = jieba.cut(s, cut_all = True)
-print("Full Mode: " + "/ ".join(seg_list))  # 全模式
-
-seg_list = jieba.cut(s, cut_all=False)
-print("Default Mode: " + "/ ".join(seg_list))  # 精确模式
-
-seg_list = jieba.cut(s)  # 默认是精确模式
-print(", ".join(seg_list))
-
-seg_list = jieba.cut_for_search(s)  # 搜索引擎模式
-print(", ".join(seg_list))
-
-
-print ('############################################### %s ###############################################' % 'tags')
 import jieba.analyse
 
-tags = jieba.analyse.extract_tags(s, withWeight = True, topK = 10)
+text = '真是好久好久没来哈皮娜拉野生动物园了，记忆里还是小时候三四年级学校组织春游去的银河系'
 
-for tag in tags:
-    print (tag)
+str1 = jieba.cut(text, cut_all=True)
+print ('全模式分词：', '|'.join(str1))
 
-print ('############################################### %s ###############################################' % '词性')
-import jieba.posseg
-words = jieba.posseg.cut(s)
-for word in words:
-    print (word)
+str2 = jieba.cut(text, cut_all=True, HMM=False)
+print ('全模式分词：', '|'.join(str2))
 
-print ('############################################### %s ###############################################' % '出现位置')
-result = jieba.tokenize(s)
-for item in result:
-    print (item)
+str3 = jieba.cut(text, cut_all=False)
+print ('全模式分词：', '|'.join(str3))
 
+str4 = jieba.cut(text, cut_all=False, HMM=False)
+print ('全模式分词：', '|'.join(str4))
 
-print ('############################################### %s ###############################################' % '搜索模式')
-result = jieba.tokenize(s, mode = 'search')
-for item in result:
-    print (item)
+str5 = jieba.cut_for_search(text)
+print ('搜索引擎模式分词：', '|'.join(str5))
 
-print (jieba.lcut(s))
+str6 = jieba.analyse.extract_tags(text)
+print ('关键词：', '|'.join(str6))
 
-print ('############################################### %s ###############################################' % '高频词汇')
-jieba.analyse.set_stop_words('stop_words.txt')
-words = jieba.cut(s, cut_all = True)
-print (','.join(words))
+str7 = jieba.analyse.extract_tags(text, topK=3)
+print ('关键词：', '|'.join(str7))
